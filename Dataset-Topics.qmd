@@ -1,23 +1,23 @@
 ---
-author: "Your Name"
+author: "Josie Browning"
 date: "2023-04-18"
 title: "Project Dataset and Topics"
 output: html
 categories: project
 ---
 
-[Link to dataset]()
+[Link to dataset](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-04-09) 
 
 Things you plan to investigate using this dataset:
 
-- Thing 1
-- Thing 2
-- Thing 3
+- Visual of totality of eclipse over a map
+- What was the average totality duration for the 2024 total solar eclipse 
+- Create a summary of the eclipses seen in Nebraska
 
 Stat 251 topics you plan to cover during the analysis:
 
-1. Topic 1
-2. Topic 2
-3. Topic 3
-4. Topic 4
+1. data visualization (ggplot)
+2. working with dates and times (lubricate)
+3. joining data (dplyr)
+4. reshaping data (tidyr)
 

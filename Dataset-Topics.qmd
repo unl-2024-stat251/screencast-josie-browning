@@ -11,13 +11,13 @@ categories: project
 Things you plan to investigate using this dataset:
 
 - Visual of totality of eclipse over a map
-- What was the average totality duration for the 2024 total solar eclipse 
-- Create a summary of the eclipses seen in Nebraska
+- What was the average totality duration for the 2024 total solar eclipse by state
+- Create a summary of the eclipses seen in Missouri
 
 Stat 251 topics you plan to cover during the analysis:
 
 1. data visualization (ggplot)
 2. working with dates and times (lubricate)
 3. joining data (dplyr)
-4. reshaping data (tidyr)
+4. data cleaning (dplyr)
 

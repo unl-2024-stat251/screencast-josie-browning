@@ -1,8 +1,40 @@
 ---
-author: "Your Name"
+author: "Josie Browning"
 date: "2023-04-20"
 title: "Screencast Pseudocode"
 output: html
 categories: project
 ---
+
+- Visual of totality of eclipse over a map
+- What was the average totality duration for the 2024 total solar eclipse by state
+- Create a summary of the two partial eclipses seen in Missouri
+
+First Quest: What was the average totality duration for the 2024 total solar eclipse 
+ - find length of totality as numeric
+    - mutate to create a new column that subtracts the end time of totality from beginning time
+    - change the datetime variable to numeric 
+ - grouping by state, create a new column and use the mean function 
+
+Second Quest: Visual of totality of eclipse over a map
+- use the same column of length of totality as numeric 
+- Using some map data from hw 5
+  - map <- map_data("world") %>%
+  filter(region %in% c("USA"))
+  - looking at eclipse_total_2024
+    - get length of totality in seconds 
+    - mutate for end - beginning, and as.numeric 
+  - x and y axis are long and lat from map data (geom_polygon)
+  - x and y axis are lon and lat grouped by eclipse 3 (geom_point)
+  - use Cartesian coordinates
+
+Third Quest: Creating a summary of the partial eclipses seen in Missouri
+- filter the two partial eclipses by state for only Missouri data
+- find total length of both eclipses
+- join together the two data frames
+- find difference between duration
+- transform seconds into minutes
+- depending on time, visual a distribution of the eclipse durations
+
+
 

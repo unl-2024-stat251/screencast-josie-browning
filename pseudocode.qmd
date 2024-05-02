@@ -6,15 +6,16 @@ output: html
 categories: project
 ---
 
-- Visual of totality of eclipse over a map
 - What was the average totality duration for the 2024 total solar eclipse by state
+- Visual of totality of eclipse over a map
 - Create a summary of the two partial eclipses seen in Missouri
+- Compare the two partial eclipses with a graph
 
 First Quest: What was the average totality duration for the 2024 total solar eclipse 
  - find length of totality as numeric
     - mutate to create a new column that subtracts the end time of totality from beginning time
-    - change the datetime variable to numeric 
- - grouping by state, create a new column and use the mean function 
+    - change the datetime variable to as.numeric 
+ - grouping by state, create a new column using mutate and use the mean function 
 
 Second Quest: Visual of totality of eclipse over a map
 - use the same column of length of totality as numeric 
@@ -25,16 +26,27 @@ Second Quest: Visual of totality of eclipse over a map
     - get length of totality in seconds 
     - mutate for end - beginning, and as.numeric 
   - x and y axis are long and lat from map data (geom_polygon)
-  - x and y axis are lon and lat grouped by eclipse 3 (geom_point)
+  - x and y axis are lon and lat grouped by eclipse_3 (geom_point)
   - use Cartesian coordinates
 
 Third Quest: Creating a summary of the partial eclipses seen in Missouri
 - filter the two partial eclipses by state for only Missouri data
-- find total length of both eclipses
-- join together the two data frames
-- find difference between duration
+- find total length of both eclipses, mutate
+- join together the two data frames, inner join by name
+- find difference between duration, mutate
 - transform seconds into minutes
-- depending on time, visual a distribution of the eclipse durations
 
-
-
+Fourth Quest: Compare the two partial eclipses with a graph 
+- join the two partial eclipse datasets
+  - create a common key to prevent confusion
+- create new columns for duration of the two eclipses
+- pivot longer so we can graph the data
+  - names to year column
+  - values to duration column
+  - rename columns to 2023 and 2024 duration
+- line graph
+  - x is our state and name key column 
+  - y is duration 
+  - color and group by year
+  - geom_line
+  

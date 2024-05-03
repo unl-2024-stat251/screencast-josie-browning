@@ -1,0 +1,92 @@
+---
+title: "ScreenCast"
+author: "Josie Browning"
+format: html
+editor: visual
+---
+```{r}
+tuesdata <- tidytuesdayR::tt_load(2024, week = 15)
+
+eclipse_annular_2023 <- tuesdata$eclipse_annular_2023
+eclipse_total_2024 <- tuesdata$eclipse_total_2024
+eclipse_partial_2023 <- tuesdata$eclipse_partial_2023
+eclipse_partial_2024 <- tuesdata$eclipse_partial_2024
+
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(tidyr)
+```
+
+```{r, First Topic}
+#Find the average totality duration for the 2024 total solar eclipse by state
+eclipse_total_2024 <- eclipse_total_2024 %>%
+  mutate(totality = eclipse_4 - eclipse_3,
+         totality = as.numeric(totality)) %>%
+  group_by(state) %>%
+  summarize(avg_state_totality = mean(totality))
+```
+
+```{r, Second Topic}
+#Visual of totality of eclipse over a map
+map <- map_data("world") %>%
+  filter(region %in% "USA")
+
+eclipse_total_2024 <- eclipse_total_2024 %>%
+  mutate(totality = eclipse_4 - eclipse_3,
+         totality = as.numeric(totality))
+
+ggplot() +
+  geom_polygon(data = map, aes(x = long, y = lat, group = group), color = "black", fill = "white") +
+  geom_point(data = eclipse_total_2024, aes(x = lon, y = lat, color = totality), size = 3) +
+  coord_cartesian(xlim = c(-130, -60), ylim = c(25, 50)) +
+  labs(title = "Totality Duration of 2024 Total Solar Eclipse", 
+       x = "Longitude", y = "Latitude")
+```
+
+```{r, Third Topic}
+#Create a summary of the two partial eclipses seen in Missouri
+m23 <- eclipse_partial_2023 %>%
+  filter(state == "MI") %>%
+  mutate(duration_23 = eclipse_5 - eclipse_1, 
+         duration_23 = as.numeric(duration_23)) %>%
+  select(name, duration_23)
+
+m24 <- eclipse_partial_2024 %>%
+  filter(state == "MI") %>%
+  mutate(duration_24 = eclipse_5 - eclipse_1, 
+         duration_24 = as.numeric(duration_24)) %>%
+  select(name, duration_24)
+
+partial_MI <- inner_join(m23, m24, by = "name")
+
+partial_MI <- partial_MI %>%
+  mutate(duration_23 = seconds_to_period(duration_23),
+         duration_24 = seconds_to_period(duration_24))
+     
+```
+
+```{r, Fourth Topic }
+#Compare the two partial eclipses with a graph
+eclipse_partial_2023 <- eclipse_partial_2023 %>%
+  mutate(state_name = paste(state, name))
+eclipse_partial_2024 <- eclipse_partial_2024 %>%
+  mutate(state_name = paste(state, name))
+
+partial <- inner_join(eclipse_partial_2023, eclipse_partial_2024, by = "state_name")
+
+partial <- partial %>%
+  mutate(duration_23 = eclipse_5.x - eclipse_1.x, 
+       duration_23 = as.numeric(duration_23),
+       duration_24 = eclipse_5.y - eclipse_1.y,
+       duration_24 = as.numeric(duration_24)) %>%
+  select(state_name, duration_23, duration_24)
+  
+partial <- partial %>%
+  pivot_longer(cols = c("duration_23", "duration_24"),
+               names_to = "year", values_to = "duration")
+
+ggplot(partial, aes(x = state_name, y = duration, color = year, group = year)) +
+  geom_line() +
+  labs(title = "2023 vs 2024 Partial Solar Eclipse Duration", x = "state_name", y = "Duration (Seconds)")
+```
